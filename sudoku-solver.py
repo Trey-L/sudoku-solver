@@ -1,5 +1,3 @@
-# --- Sudoku Solver ---
-
 def solve_sudoku(grid):
     find = find_empty(grid)
     if not find:
