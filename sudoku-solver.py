@@ -5,21 +5,19 @@ def solve_sudoku(grid):
     else:
         row, col = find
 
-    for num in range(1, 10): # Try numbers 1-9
+    for num in range(1, 10): # try numbers 1-9
         if is_valid(grid, num, (row, col)):
             grid[row][col] = num
 
-            if solve_sudoku(grid): # Recursively try to solve the rest
+            if solve_sudoku(grid): # recursively try to solve the rest
                 return True
 
-            grid[row][col] = 0 # Backtrack: Reset the cell if the path failed
+            grid[row][col] = 0 # reset the cell if the path failed
 
-    return False # Trigger backtracking if no number works for this cell
+    return False # trigger backtracking if no number works for this cell
 
 def is_valid(grid, num, pos):
-    """
-    Checks if placing 'num' at 'pos' (row, col) is valid.
-    """
+    """Checks if placing 'num' at 'pos' (row, col) is valid."""
     row, col = pos
 
     # Check row
@@ -94,10 +92,9 @@ def parse_input_string(input_str):
             return None
     return grid
 
-# --- Main Execution ---
 if __name__ == "__main__":
     print("Sudoku Solver")
-    print("Enter the puzzle as a single 81-character string, row by row, left to right.")
+    print("Enter the puzzle as a single 81-character string, row by row, left to right, up to down.")
     print("Use digits 1-9 for filled cells and '0', 'x', or '.' for empty cells.")
     print("Example: 530070000600195000098000060800060003400803001700020006060000280000419005000080079")
 
@@ -106,18 +103,18 @@ if __name__ == "__main__":
         board = parse_input_string(puzzle_string.strip())
 
         if board:
-            # Check if the initial board has obvious conflicts before solving
+            # check if initial board has obvious conflicts before solving
             initial_valid = True
             for r in range(9):
                 for c in range(9):
                     num = board[r][c]
                     if num != 0:
-                       # Temporarily set to 0 to check validity against others
+                       # temporarily set to 0 to check validity against others
                        board[r][c] = 0
                        if not is_valid(board, num, (r, c)):
                            print(f"\nError: Initial board has a conflict with value {num} at row {r+1}, col {c+1}.")
                            initial_valid = False
-                       board[r][c] = num # Put it back
+                       board[r][c] = num # put it back
                     if not initial_valid: break
                 if not initial_valid: break
 
@@ -133,4 +130,3 @@ if __name__ == "__main__":
             break
         else:
             print("Please try entering the puzzle string again.")
-            # Loop continues to ask for input
